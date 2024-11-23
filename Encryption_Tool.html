@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryption Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e3f2fd, #ffffff);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .team-members .member {
+            background: white;
+            color: #007bff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .team-members .member:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            margin-top: 30px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            animation: slideIn 1.2s ease-out;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            resize: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+        }
+
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-5px);
+        }
+
+        button i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-members .member {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🔒 Encryption Tool</h1>
+        <div class="team-members">
+            <div class="member">
+                <p><strong>Mazen Alahmadi</strong></p>
+                <p>ID: 4003295</p>
+            </div>
+            <div class="member">
+                <p><strong>Maejd</strong></p>
+                <p>ID: 034403</p>
+            </div>
+            <div class="member">
+                <p><strong>Ziad</strong></p>
+                <p>ID: 403444</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Choose Your Encryption Method</h1>
+        <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+        <textarea id="outputText" placeholder="Result..." readonly></textarea>
+        <div class="button-container">
+            <button onclick="morseEncrypt()"><i>🔒</i>Morse Encrypt</button>
+            <button onclick="morseDecrypt()"><i>🔓</i>Morse Decrypt</button>
+            <button onclick="atbashEncrypt()"><i>🔒</i>Atbash Encrypt</button>
+            <button onclick="atbashDecrypt()"><i>🔓</i>Atbash Decrypt</button>
+            <button onclick="caesarEncrypt()"><i>🔒</i>Caesar Encrypt</button>
+            <button onclick="caesarDecrypt()"><i>🔓</i>Caesar Decrypt</button>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+    <script>
+        const morseCodeMap = {
+            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+            'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+            'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+            'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+            'Y': '-.--', 'Z': '--..',
+            'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..', 'e': '.', 'f': '..-.',
+            'g': '--.', 'h': '....', 'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..',
+            'm': '--', 'n': '-.', 'o': '---', 'p': '.--.', 'q': '--.-', 'r': '.-.',
+            's': '...', 't': '-', 'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
+            'y': '-.--', 'z': '--..',
+            '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+            '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+            ' ': '/'
+        };
+
+        const reverseMorseCodeMap = Object.entries(morseCodeMap).reduce((obj, [key, value]) => {
+            obj[value] = key;
+            return obj;
+        }, {});
+
+        function morseEncrypt() {
+            const input = document.getElementById('inputText').value;
+            let result = '';
+            for (const char of input) {
+                if (char >= 'A' && char <= 'Z') {
+                    result += '*' + morseCodeMap[char] + ' ';
+                } else if (morseCodeMap[char]) {
+                    result += morseCodeMap[char] + ' ';
+                } else {
+                    result += char + ' ';
+                }
+            }
+            document.getElementById('outputText').value = result.trim();
+        }
+
+        function morseDecrypt() {
+            const input = document.getElementById('inputText').value.trim();
+            const morseChars = input.split(' ');
+            let result = '';
+            for (const morseChar of morseChars) {
+                if (morseChar.startsWith('*')) {
+                    const plainChar = reverseMorseCodeMap[morseChar.slice(1)];
+                    result += plainChar ? plainChar.toUpperCase() : '';
+                } else if (reverseMorseCodeMap[morseChar]) {
+                    result += reverseMorseCodeMap[morseChar];
+                } else if (morseChar === '/') {
+                    result += ' ';
+                } else {
+                    result += morseChar;
+                }
+            }
+            document.getElementById('outputText').value = result;
+        }
+
+        function atbashEncrypt() {
+            const input = document.getElementById('inputText').value;
+            let result = '';
+            for (const char of input) {
+                if (char >= 'A' && char <= 'Z') {
+                    result += String.fromCharCode('Z'.charCodeAt(0) - (char.charCodeAt(0) - 'A'.charCodeAt(0)));
+                } else if (char >= 'a' && char <= 'z') {
+                    result += String.fromCharCode('z'.charCodeAt(0) - (char.charCodeAt(0) - 'a'.charCodeAt(0)));
+                } else {
+                    result += char;
+                }
+            }
+            document.getElementById('outputText').value = result;
+        }
+
+        function atbashDecrypt() {
+            atbashEncrypt();
+        }
+
+        function caesarEncrypt() {
+            const input = document.getElementById('inputText').value;
+            const shift = 3;
+            let result = '';
+            for (const char of input) {
+                if (char >= 'A' && char <= 'Z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 'A'.charCodeAt(0) + shift) % 26) + 'A'.charCodeAt(0));
+                } else if (char >= 'a' && char <= 'z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 'a'.charCodeAt(0) + shift) % 26) + 'a'.charCodeAt(0));
+                } else {
+                    result += char;
+                }
+            }
+            document.getElementById('outputText').value = result;
+        }
+
+        function caesarDecrypt() {
+            const input = document.getElementById('inputText').value;
+            const shift = 3;
+            let result = '';
+            for (const char of input) {
+                if (char >= 'A' && char <= 'Z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 'A'.charCodeAt(0) - shift + 26) % 26) + 'A'.charCodeAt(0));
+                } else if (char >= 'a' && char <= 'z') {
+                    result += String.fromCharCode(((char.charCodeAt(0) - 'a'.charCodeAt(0) - shift + 26) % 26) + 'a'.charCodeAt(0));
+                } else {
+                    result += char;
+                }
+            }
+            document.getElementById('outputText').value = result;
+        }
+    </script>
